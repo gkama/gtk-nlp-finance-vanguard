@@ -6,11 +6,11 @@ namespace nlp.finance.vanguard.services
 {
     public class VanguardModelQuery : ObjectGraphType
     {
-        public VanguardModelQuery(INlpRepository repo)
+        public VanguardModelQuery(INlpRepository<VanguardModel> repo)
         {
             Field<VanguardModelType>(
                 "vanguard_model",
-                resolve: context => repo.vanguard_model
+                resolve: context => repo.model
                 );
         }
     }

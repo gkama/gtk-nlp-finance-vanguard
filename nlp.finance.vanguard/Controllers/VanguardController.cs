@@ -14,9 +14,9 @@ namespace nlp.finance.vanguard.Controllers
     [ApiController]
     public class VanguardController : ControllerBase
     {
-        public readonly INlpRepository repo;
+        public readonly INlpRepository<VanguardModel> repo;
 
-        public VanguardController(INlpRepository repo)
+        public VanguardController(INlpRepository<VanguardModel> repo)
         {
             this.repo = repo;
         }
@@ -25,7 +25,7 @@ namespace nlp.finance.vanguard.Controllers
         [HttpGet]
         public IActionResult GetModel()
         {
-            return Ok(repo.vanguard_model);
+            return Ok(repo.model);
         }
     }
 }

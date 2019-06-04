@@ -8,23 +8,35 @@ using nlp.finance.vanguard.data;
 
 namespace nlp.finance.vanguard.services
 {
-    public class NlpRepository : INlpRepository
+    public class NlpRepository<T> : INlpRepository<T> 
+        where T : class
     {
-        public IModel<VanguardModel> vanguard_model { get; }
+        public IModel<T> model { get; }
         public ILogger log { get; }
 
-        public NlpRepository(IModel<VanguardModel> vanguard_model, ILogger<NlpRepository> log)
+        public NlpRepository(IModel<T> model, ILogger<NlpRepository<T>> log)
         {
-            this.vanguard_model = vanguard_model;
+            this.model = model;
             this.log = log;
+        }
+
+        public void Categorize(string content)
+        {
+            /*
+             * 1) tokenize the content
+             */
+            content.Split(' ').ToList().ForEach(x =>
+            {
+
+            });
         }
 
         private IEnumerable<string> BinarySearchDetails(string value)
         {
             var low = 0;
-            var high = vanguard_model.details_split.Count() - 1;
+            var high = model.details_split.Count() - 1;
             var mid = 0;
-            var details_array = vanguard_model.details_split as string[];
+            var details_array = model.details_split as string[];
             var matched_words = new List<string>();
 
             while (low <= high)
@@ -36,7 +48,7 @@ namespace nlp.finance.vanguard.services
                 else if (string.Compare(value, details_array[mid], true) > 0)
                     low = mid + 1;
                 else
-                    matched_words.Add(details_array[mid]);
+                    if (!matched_words.Contains(value)) matched_words.Add(details_array[mid]);
             }
 
             return matched_words;
