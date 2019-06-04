@@ -20,7 +20,7 @@
     "nlp.finance.vanguard": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "nlp/finance/vanguard/model",
+      "launchUrl": "ui/playground",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

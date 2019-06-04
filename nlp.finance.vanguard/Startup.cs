@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+
 using nlp.finance.vanguard.data;
 using nlp.finance.vanguard.services;
 
@@ -30,8 +34,17 @@ namespace nlp.finance.vanguard
         {
             services.AddSingleton<INlpRepository, NlpRepository>();
             services.AddSingleton<VanguardModel>(Models.vanguard_model);
+            services.AddScoped<VanguardModelType>();
+            services.AddScoped<VanguardModelSchema>();
+            services.AddScoped<VanguardModelQuery>();
 
+            services.AddLogging();
             services.AddHealthChecks();
+
+            //GraphQL
+            services.AddScoped<IDependencyResolver>(x => new FuncDependencyResolver(x.GetRequiredService));
+            services.AddGraphQL(x => { x.ExposeExceptions = false; })
+                .AddGraphTypes(ServiceLifetime.Scoped);
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -48,6 +61,9 @@ namespace nlp.finance.vanguard
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseGraphQL<VanguardModelSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             app.UseHealthChecks("/nlp/finance/vanguard/ping");
             app.UseMvc();
