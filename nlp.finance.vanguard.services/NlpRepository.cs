@@ -31,7 +31,7 @@ namespace nlp.finance.vanguard.services
 
             while (models.Any())
             {
-                var m = models.Pop() as VanguardModel;
+                var m = models.Pop() as IModel<T>;
 
                 content.Split(' ').ToList().ForEach(x =>
                 {
@@ -39,13 +39,16 @@ namespace nlp.finance.vanguard.services
                 });
 
                 if (m.children.Any())
-                    models.Push(m.children as T);
+                    m.children.ToList().ForEach(x =>
+                    {
+                        models.Push(x);
+                    });
             }
 
             return toReturn;
         }
 
-        private IEnumerable<string> BinarySearchDetails(string value, VanguardModel model)
+        private IEnumerable<string> BinarySearchDetails(string value, IModel<T> model)
         {
             var low = 0;
             var high = model.details_split.Count() - 1;
