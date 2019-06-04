@@ -29,7 +29,7 @@ namespace nlp.finance.vanguard
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<INlpRepository, NlpRepository>();
-            services.AddSingleton<VanguardModel>(Models.vanguad_model);
+            services.AddSingleton<VanguardModel>(Models.vanguard_model);
 
             services.AddHealthChecks();
 

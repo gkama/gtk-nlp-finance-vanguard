@@ -10,7 +10,7 @@ using nlp.finance.vanguard.services;
 
 namespace nlp.finance.vanguard.Controllers
 {
-    [Route("api")]
+    [Route("nlp/finance/vanguard")]
     [ApiController]
     public class VanguardController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace nlp.finance.vanguard.Controllers
         [HttpGet]
         public IActionResult GetModel()
         {
-            return Ok(repo.model);
+            return Ok(repo.vanguard_model);
         }
     }
 }
