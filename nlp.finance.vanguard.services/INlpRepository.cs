@@ -4,6 +4,6 @@ namespace nlp.finance.vanguard.services
 {
     public interface INlpRepository
     {
-        VanguardModel vanguard_model { get; }
+        IModel<VanguardModel> vanguard_model { get; }
     }
 }

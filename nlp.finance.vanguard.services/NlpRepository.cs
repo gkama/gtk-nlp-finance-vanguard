@@ -8,11 +8,10 @@ namespace nlp.finance.vanguard.services
 {
     public class NlpRepository : INlpRepository
     {
-        public VanguardModel vanguard_model { get; }
+        public IModel<VanguardModel> vanguard_model { get; }
+        public ILogger log { get; }
 
-        public readonly ILogger log;
-
-        public NlpRepository(VanguardModel vanguard_model, ILogger<NlpRepository> log)
+        public NlpRepository(IModel<VanguardModel> vanguard_model, ILogger<NlpRepository> log)
         {
             this.vanguard_model = vanguard_model;
             this.log = log;

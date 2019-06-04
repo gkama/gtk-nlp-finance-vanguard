@@ -22,18 +22,18 @@ namespace nlp.finance.vanguard
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<INlpRepository, NlpRepository>();
-            services.AddSingleton<VanguardModel>(Models.vanguard_model);
+            services.AddSingleton<IModel<VanguardModel>>(Models.vanguard_model);
             services.AddScoped<VanguardModelType>();
             services.AddScoped<VanguardModelSchema>();
             services.AddScoped<VanguardModelQuery>();

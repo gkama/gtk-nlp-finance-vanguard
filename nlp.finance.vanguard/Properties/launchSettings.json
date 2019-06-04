@@ -12,15 +12,15 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "nlp/finance/vanguard/model",
+      "launchUrl": "ui/playground",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "nlp.finance.vanguard": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "ui/playground",
+      "launchBrowser": false,
+      "launchUrl": "nlp/finance/vanguard/model",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
