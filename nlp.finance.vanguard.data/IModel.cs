@@ -2,7 +2,8 @@
 
 namespace nlp.finance.vanguard.data
 {
-    public class Class1
+    public interface IModel
     {
+        Guid id { get; set; }
     }
 }
