@@ -1,4 +1,6 @@
-﻿using nlp.finance.vanguard.data;
+﻿using System.Collections.Generic;
+
+using nlp.finance.vanguard.data;
 
 namespace nlp.finance.vanguard.services
 {
@@ -6,5 +8,6 @@ namespace nlp.finance.vanguard.services
         where T : class
     {
         IModel<T> model { get; }
+        IEnumerable<IEnumerable<string>> Categorize(string content);
     }
 }

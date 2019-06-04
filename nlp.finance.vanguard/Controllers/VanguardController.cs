@@ -27,5 +27,17 @@ namespace nlp.finance.vanguard.Controllers
         {
             return Ok(repo.model);
         }
+
+        [Route("categorize")]
+        [HttpPost]
+        public IActionResult Categorize([FromBody]Content content)
+        {
+            return Ok(repo.Categorize(content.content));
+        }
+
+        public class Content
+        {
+            public string content { get; set; }
+        }
     }
 }

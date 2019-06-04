@@ -20,18 +20,32 @@ namespace nlp.finance.vanguard.services
             this.log = log;
         }
 
-        public void Categorize(string content)
+        public IEnumerable<IEnumerable<string>> Categorize(string content)
         {
             /*
-             * 1) tokenize the content
+             * 1) generate the stack of models to iterate through
+             * 2) tokenize the content
              */
-            content.Split(' ').ToList().ForEach(x =>
-            {
+            var models = new Stack<T>(model.children);
+            var toReturn = new List<IEnumerable<string>>();
 
-            });
+            while (models.Any())
+            {
+                var m = models.Pop() as VanguardModel;
+
+                content.Split(' ').ToList().ForEach(x =>
+                {
+                    toReturn.Add(BinarySearchDetails(x, m));
+                });
+
+                if (m.children.Any())
+                    models.Push(m.children as T);
+            }
+
+            return toReturn;
         }
 
-        private IEnumerable<string> BinarySearchDetails(string value)
+        private IEnumerable<string> BinarySearchDetails(string value, VanguardModel model)
         {
             var low = 0;
             var high = model.details_split.Count() - 1;
@@ -48,7 +62,15 @@ namespace nlp.finance.vanguard.services
                 else if (string.Compare(value, details_array[mid], true) > 0)
                     low = mid + 1;
                 else
-                    if (!matched_words.Contains(value)) matched_words.Add(details_array[mid]);
+                {
+                    if (!matched_words.Contains(value))
+                    {
+                        matched_words.Add(value);
+                        break;
+                    }
+                    else
+                        break;
+                }
             }
 
             return matched_words;
