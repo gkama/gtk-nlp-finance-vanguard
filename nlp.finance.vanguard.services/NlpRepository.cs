@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using Microsoft.Extensions.Logging;
@@ -25,6 +26,9 @@ namespace nlp.finance.vanguard.services
             var models = new Stack<T>(model.children);
             var categories = new List<ICategory>();
 
+            var sw = new Stopwatch();
+
+            sw.Start();
             while (models.Any())
             {
                 var m = models.Pop() as IModel<T>;
@@ -40,6 +44,9 @@ namespace nlp.finance.vanguard.services
                         models.Push(x);
                     });
             }
+            sw.Stop();
+
+            log.LogInformation($"categorization took {sw.Elapsed.TotalMilliseconds * 1000} μs (microseconds)");
 
             return categories;
         }
@@ -61,7 +68,6 @@ namespace nlp.finance.vanguard.services
                     low = mid + 1;
                 else
                 {
-                    //TODO: add weight for each matched word
                     categories.AddCategory(model.name, value);
                     break;
                 }
