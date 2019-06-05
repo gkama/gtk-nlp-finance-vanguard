@@ -35,8 +35,10 @@ namespace nlp.finance.vanguard
             services.AddSingleton<INlpRepository<VanguardModel>, NlpRepository<VanguardModel>>();
             services.AddSingleton<IModel<VanguardModel>>(Models.vanguard_model);
             services.AddScoped<VanguardModelType>();
-            services.AddScoped<VanguardModelSchema>();
-            services.AddScoped<VanguardModelQuery>();
+            services.AddScoped<CategoryType>();
+            services.AddScoped<MatchedType>();
+            services.AddScoped<NlpSchema>();
+            services.AddScoped<NlpQuery>();
 
             services.AddLogging();
             services.AddHealthChecks();
@@ -63,7 +65,7 @@ namespace nlp.finance.vanguard
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseGraphQL<VanguardModelSchema>();
+            app.UseGraphQL<NlpSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             app.UseHealthChecks("/nlp/finance/vanguard/ping");
