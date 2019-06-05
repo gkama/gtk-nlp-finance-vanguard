@@ -11,7 +11,6 @@ namespace nlp.finance.vanguard.data
 {
     ""id"": ""984ce69d-de79-478b-9223-ff6349514e19"",
     ""name"": ""Vanguard"",
-    ""details"": ""vanguard|vanguard group"",
     ""children"": [
         {
             ""id"": ""5ec6957d-4de7-4199-9373-d4a7fb59d6e1"",

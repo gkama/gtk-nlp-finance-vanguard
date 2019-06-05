@@ -51,6 +51,7 @@ namespace nlp.finance.vanguard
                 .AddJsonOptions(o =>
                 {
                     o.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                    o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 });
         }
 
