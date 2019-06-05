@@ -20,14 +20,10 @@ namespace nlp.finance.vanguard.services
             this.log = log;
         }
 
-        public IEnumerable<IEnumerable<string>> Categorize(string content)
+        public IEnumerable<object> Categorize(string content)
         {
-            /*
-             * 1) generate the stack of models to iterate through
-             * 2) tokenize the content
-             */
             var models = new Stack<T>(model.children);
-            var toReturn = new List<IEnumerable<string>>();
+            var categories = new List<object>();
 
             while (models.Any())
             {
@@ -35,7 +31,7 @@ namespace nlp.finance.vanguard.services
 
                 content.Split(' ').ToList().ForEach(x =>
                 {
-                    toReturn.Add(BinarySearchDetails(x, m));
+                    categories.AddIfNotNull(BinarySearchDetails(x, m));
                 });
 
                 if (m.children.Any())
@@ -45,16 +41,15 @@ namespace nlp.finance.vanguard.services
                     });
             }
 
-            return toReturn;
+            return categories;
         }
 
-        private IEnumerable<string> BinarySearchDetails(string value, IModel<T> model)
+        private object BinarySearchDetails(string value, IModel<T> model)
         {
             var low = 0;
             var high = model.details_split.Count() - 1;
             var mid = 0;
             var details_array = model.details_split as string[];
-            var matched_words = new List<string>();
 
             while (low <= high)
             {
@@ -65,18 +60,10 @@ namespace nlp.finance.vanguard.services
                 else if (string.Compare(value, details_array[mid], true) > 0)
                     low = mid + 1;
                 else
-                {
-                    if (!matched_words.Contains(value))
-                    {
-                        matched_words.Add(value);
-                        break;
-                    }
-                    else
-                        break;
-                }
+                    return new { category = model.name, value = value };
             }
 
-            return matched_words;
+            return null;
         }
     }
 }
