@@ -8,6 +8,6 @@ namespace nlp.finance.vanguard.services
         where T : class
     {
         IModel<T> model { get; }
-        IEnumerable<object> Categorize(string content);
+        IEnumerable<ICategory> Categorize(string content);
     }
 }

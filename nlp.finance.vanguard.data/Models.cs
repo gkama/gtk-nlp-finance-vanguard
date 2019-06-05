@@ -23,6 +23,7 @@ namespace nlp.finance.vanguard.data
 ";
 
         public static VanguardModel vanguard_model =>
-            Newtonsoft.Json.JsonConvert.DeserializeObject<VanguardModel>(vanguard_model_str);
+            Newtonsoft.Json.JsonConvert
+            .DeserializeObject<VanguardModel>(vanguard_model_str);
     }
 }

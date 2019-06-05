@@ -20,10 +20,10 @@ namespace nlp.finance.vanguard.services
             this.log = log;
         }
 
-        public IEnumerable<object> Categorize(string content)
+        public IEnumerable<ICategory> Categorize(string content)
         {
             var models = new Stack<T>(model.children);
-            var categories = new List<object>();
+            var categories = new List<ICategory>();
 
             while (models.Any())
             {
@@ -31,7 +31,7 @@ namespace nlp.finance.vanguard.services
 
                 content.Split(' ').ToList().ForEach(x =>
                 {
-                    categories.AddIfNotNull(BinarySearchDetails(x, m));
+                    BinarySearchDetails(x, m, ref categories);
                 });
 
                 if (m.children.Any())
@@ -44,11 +44,11 @@ namespace nlp.finance.vanguard.services
             return categories;
         }
 
-        private object BinarySearchDetails(string value, IModel<T> model)
+        private void BinarySearchDetails(string value, IModel<T> model, ref List<ICategory> categories)
         {
             var low = 0;
-            var high = model.details_split.Count() - 1;
             var mid = 0;
+            var high = model.details_split.Count() - 1;
             var details_array = model.details_split as string[];
 
             while (low <= high)
@@ -60,10 +60,11 @@ namespace nlp.finance.vanguard.services
                 else if (string.Compare(value, details_array[mid], true) > 0)
                     low = mid + 1;
                 else
-                    return new { category = model.name, value = value };
+                {
+                    categories.AddCategory(model.name, value);
+                    break;
+                }
             }
-
-            return null;
         }
     }
 }
