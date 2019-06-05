@@ -18,13 +18,28 @@ namespace nlp.finance.vanguard.services
             var category = categories
                 .FirstOrDefault(x => x.name == model_name);
 
-            if (category != null && category.matched_words.Contains(value, StringComparer.OrdinalIgnoreCase))
+            if (category != null
+                && category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) == 0) != null)
+            {
+                category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) == 0).weight++;
                 category.total_weight++;
+            }
+            else if (category != null
+                && category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) != 0) != null)
+            {
+                var new_matched = new Matched() { value = value };
+
+                new_matched.weight++;
+                category.matched.Add(new_matched);
+                category.total_weight++;
+            }
             else
             {
                 var new_category = new Category() { name = model_name };
+                var new_matched = new Matched() { value = value };
 
-                new_category.matched_words.Add(value);
+                new_matched.weight++;
+                new_category.matched.Add(new_matched);
                 new_category.total_weight++;
 
                 categories.Add(new_category);

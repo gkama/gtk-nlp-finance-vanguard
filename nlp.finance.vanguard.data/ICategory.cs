@@ -8,6 +8,12 @@ namespace nlp.finance.vanguard.data
     {
         string name { get; set; }
         int total_weight { get; set; }
-        ICollection<string> matched_words { get; set; }
+        ICollection<IMatched> matched { get; set; }
+    }
+
+    public interface IMatched
+    {
+        string value { get; set; }
+        int weight { get; set; }
     }
 }
