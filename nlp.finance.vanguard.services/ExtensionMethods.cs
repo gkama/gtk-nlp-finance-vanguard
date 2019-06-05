@@ -45,5 +45,27 @@ namespace nlp.finance.vanguard.services
                 categories.Add(new_category);
             }
         }
+
+
+        public static List<string> Tokenize(this string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return new List<string>();
+
+            var words = input.Split(ModelsSettings.delimiters,
+                StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            var found = new List<string>();
+
+            words.ForEach(x =>
+            {
+                var x_lower = x.ToLower();
+
+                if (!ModelsSettings.stop_words.Contains(x_lower))
+                    found.Add(x);
+            });
+
+            return found;
+        }
     }
 }

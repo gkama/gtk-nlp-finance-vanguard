@@ -33,7 +33,8 @@ namespace nlp.finance.vanguard.services
             {
                 var m = models.Pop() as IModel<T>;
 
-                content.Split(' ').ToList().ForEach(x =>
+                //TODO: add words vs. phrases (containing spaces)
+                content.Tokenize().ForEach(x =>
                 {
                     BinarySearchDetails(x, m, ref categories);
                 });

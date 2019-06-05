@@ -8,7 +8,7 @@ namespace nlp.finance.vanguard.data
         {
             Field(x => x.id);
             Field(x => x.name);
-            Field(x => x.details);
+            Field(x => x.details, nullable: true);
 
             Field<ListGraphType<VanguardModelType>>("children", resolve: context => context.Source.children);
         }
