@@ -30,14 +30,9 @@ namespace nlp.finance.vanguard.Controllers
 
         [Route("categorize")]
         [HttpPost]
-        public IActionResult Categorize([FromBody]Content content)
+        public IActionResult Categorize([FromBody]RequestContent req)
         {
-            return Ok(repo.Categorize(content.content));
-        }
-
-        public class Content
-        {
-            public string content { get; set; }
+            return Ok(repo.Categorize(req.content));
         }
     }
 }
