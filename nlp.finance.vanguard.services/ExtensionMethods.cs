@@ -8,11 +8,20 @@ namespace nlp.finance.vanguard.services
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// adds an <see cref="object"/> to a <see cref="List{T}"/> if it doesn't exist in the <see cref="List{T}"/>
+        /// </summary>
         public static void AddIfNotNull(this List<object> categories, object value)
         {
             if (value != null) categories.Add(value);
         }
 
+        /// <summary>
+        /// If a <see cref="ICategory"/> exists in the <paramref name="categories"/> then it either adds the <paramref name="value"/>
+        /// to the <see cref="ICategory.matched"/> list of it updates the <see cref="IMatched.weight"/> and <seealso cref="ICategory.total_weight"/> accordingly.
+        /// If a <see cref="ICategory"/> doesn't exist, then it simply adds it to the list. The majority of the work is done if a <see cref="ICategory"/>
+        /// already exists and it needs to be updated accordingly
+        /// </summary>
         public static void AddCategory(this List<ICategory> categories, string model_name, string value)
         {
             var category = categories
@@ -46,7 +55,10 @@ namespace nlp.finance.vanguard.services
             }
         }
 
-
+        /// <summary>
+        /// Tokenizes an input string by splitting it based on <see cref="ModelsSettings.delimiters"/>,
+        /// removing <see cref="ModelsSettings.stop_words"/> and finally returning it as a <see cref="List{T}"/>
+        /// </summary>
         public static List<string> Tokenize(this string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return new List<string>();
