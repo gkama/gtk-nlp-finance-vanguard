@@ -61,6 +61,7 @@ namespace nlp.finance.vanguard.services
                     low = mid + 1;
                 else
                 {
+                    //TODO: add weight for each matched word
                     categories.AddCategory(model.name, value);
                     break;
                 }
