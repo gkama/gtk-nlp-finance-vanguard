@@ -8,7 +8,19 @@ namespace nlp.finance.vanguard.data
     {
         [Newtonsoft.Json.JsonProperty("category")]
         public string name { get; set; }
-        public int total_weight { get; set; } = 0;
+        public int total_weight
+        {
+            get
+            {
+                var t = 0;
+                matched.ToList().ForEach(x =>
+                {
+                    t += x.weight;
+                });
+
+                return t;
+            }
+        }
         public ICollection<IMatched> matched { get; set; } = new List<IMatched>();
     }
 

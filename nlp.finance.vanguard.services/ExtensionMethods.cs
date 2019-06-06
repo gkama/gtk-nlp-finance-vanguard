@@ -28,19 +28,21 @@ namespace nlp.finance.vanguard.services
                 .FirstOrDefault(x => x.name == model_name);
 
             if (category != null
-                && category.matched.Any(x => string.Compare(x.value, value, true) == 0))
+                && category.matched
+                    .Any(x => string.Compare(x.value, value, true) == 0))
             {
-                category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) == 0).weight++;
-                category.total_weight++;
+                category.matched
+                    .FirstOrDefault(x => string.Compare(x.value, value, true) == 0)
+                    .weight++;
             }
             else if (category != null
-                && category.matched.Any(x => string.Compare(x.value, value, true) != 0))
+                && category.matched
+                    .Any(x => string.Compare(x.value, value, true) != 0))
             {
                 var new_matched = new Matched() { value = value };
 
                 new_matched.weight++;
                 category.matched.Add(new_matched);
-                category.total_weight++;
             }
             else
             {
@@ -49,7 +51,6 @@ namespace nlp.finance.vanguard.services
 
                 new_matched.weight++;
                 new_category.matched.Add(new_matched);
-                new_category.total_weight++;
 
                 categories.Add(new_category);
             }
