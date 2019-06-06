@@ -14,6 +14,6 @@ namespace nlp.finance.vanguard.data
         [JsonIgnore]
         public IEnumerable<string> details_split => details.Split('|');
 
-        public IEnumerable<VanguardModel> children { get; set; } = new List<VanguardModel>();
+        public ICollection<VanguardModel> children { get; set; } = new List<VanguardModel>();
     }
 }
