@@ -9,7 +9,7 @@ stages:
   
 variables:
   DOCKER_DRIVER: overlay2
-  DOCKER_MAGE: gkama/gtk-nlp-finance-vanguard:latest
+  DOCKER_MAGE: gkama/nlp-finance-vanguard:latest
   
 docker build and push:
   stage: docker build and push
