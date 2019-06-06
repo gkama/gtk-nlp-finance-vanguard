@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using Xunit;
+
 using Newtonsoft.Json;
 
 using nlp.finance.vanguard.data;

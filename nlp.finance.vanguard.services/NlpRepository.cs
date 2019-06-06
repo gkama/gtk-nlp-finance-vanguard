@@ -33,15 +33,21 @@ namespace nlp.finance.vanguard.services
             {
                 var m = models.Pop() as IModel<T>;
 
-                //TODO: add words vs. phrases (containing spaces)
                 content.Tokenize().ForEach(x =>
                 {
                     BinarySearchDetails(x, m);
                 });
 
-                //Categorization of phrases
-                //need to look through the model's details and see if any of them contain spaces
-                //models = new Stack<T>(model.children);
+                //categorization of phrases
+                //grab all details that contain spaces and add it to the categories
+                m.details_split
+                    .Where(x => x.Contains(' '))
+                    .ToList()
+                    .ForEach(x =>
+                    {
+                        if (content.Contains(x))
+                            categories.AddCategory(m.name, x);
+                    });
 
                 if (m.children.Any())
                     m.children.ToList().ForEach(x =>
