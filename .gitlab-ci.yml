@@ -15,4 +15,4 @@ build:
 test:
   stage: test
   script:
-    - "dotnet test ."
+    - "dotnet test . --configuration $build_config"
