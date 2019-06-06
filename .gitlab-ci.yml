@@ -4,28 +4,24 @@ services:
   - docker:dind
 
 stages:
-  - docker build
-  - docker push
-  - registry push
+  - docker build and push
+  - registry build and push
   
 variables:
+  DOCKER_DRIVER: overlay2
   DOCKER_MAGE: gkama/gtk-nlp-finance-vanguard:latest
   
-docker build:
-  stage: docker build
-  script:
-    - docker build -t $DOCKER_MAGE .
-
-docker push:
-  stage: docker push
+docker build and push:
+  stage: docker build and push
   script:
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker build -t $DOCKER_MAGE .
     - docker push $DOCKER_MAGE
   only:
     - master
 
-registry push:
-  stage: registry push
+registry build and push:
+  stage: registry build and push
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/gkama/gtk-nlp-finance-vanguard:latest .
