@@ -5,16 +5,24 @@ services:
 
 stages:
   - docker build
-  - registry push
   - docker push
+  - registry push
   
 variables:
-  REGISTRY_IMAGE: $CI_REGISTRY_IMAGE:latest
+  DOCKER_MAGE: gkama/gtk-nlp-finance-vanguard:latest
   
 docker build:
   stage: docker build
   script:
-    - docker build -t gkama/gtk-nlp-finance-vanguard:latest .
+    - docker build -t $DOCKER_MAGE .
+
+docker push:
+  stage: docker push
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker push $DOCKER_MAGE
+  only:
+    - master
 
 registry push:
   stage: registry push
@@ -22,13 +30,5 @@ registry push:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/gkama/gtk-nlp-finance-vanguard:latest .
     - docker push $CI_REGISTRY/gkama/gtk-nlp-finance-vanguard:latest
-  only:
-    - master
-
-docker push:
-  stage: docker push
-  script:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - docker push .
   only:
     - master
