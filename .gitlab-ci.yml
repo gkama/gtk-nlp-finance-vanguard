@@ -3,6 +3,7 @@ image: mcr.microsoft.com/dotnet/core/sdk:2.2-stretch
 stages:
   - build
   - test
+  - docker build and push
   
 variables:
   build_config: "Release"
@@ -16,3 +17,9 @@ test:
   stage: test
   script:
     - "dotnet test . --configuration $build_config"
+
+docker build and push:
+  stage: docker build and push
+  script:
+    - docker build -t registry.gitlab.com/gkama/gtk-nlp-finance-vanguard .
+    - docker push registry.gitlab.com/gkama/gtk-nlp-finance-vanguard
