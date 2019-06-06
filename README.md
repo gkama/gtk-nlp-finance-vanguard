@@ -1,5 +1,5 @@
 # gtk-nlp-finance-vanguard
-a Natural Language Processing (nlp) API specifically for financial `[Vanguard](http://vanguard.com)` words and phrases. it's used to text mine and get categorizations, with weight, back
+a Natural Language Processing (nlp) API specifically for financial `Vanguard`(https://about.vanguard.com/) words and phrases. it's used to text mine and get categorizations, with weight, back
 
 ## overview
 - `ASP.NET Core 2.2 API` implementation
