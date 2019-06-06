@@ -39,6 +39,10 @@ namespace nlp.finance.vanguard.services
                     BinarySearchDetails(x, m);
                 });
 
+                //Categorization of phrases
+                //need to look through the model's details and see if any of them contain spaces
+                //models = new Stack<T>(model.children);
+
                 if (m.children.Any())
                     m.children.ToList().ForEach(x =>
                     {
@@ -48,10 +52,6 @@ namespace nlp.finance.vanguard.services
             sw.Stop();
 
             log.LogInformation($"categorization took {sw.Elapsed.TotalMilliseconds * 1000} μs (microseconds)");
-
-            //Categorization of phrases
-            //need to look through the model's details and see if any of them contain spaces
-            //models = new Stack<T>(model.children);
 
 
             return categories;

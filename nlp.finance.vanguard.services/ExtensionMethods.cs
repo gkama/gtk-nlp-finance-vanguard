@@ -28,13 +28,13 @@ namespace nlp.finance.vanguard.services
                 .FirstOrDefault(x => x.name == model_name);
 
             if (category != null
-                && category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) == 0) != null)
+                && category.matched.Any(x => string.Compare(x.value, value, true) == 0))
             {
                 category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) == 0).weight++;
                 category.total_weight++;
             }
             else if (category != null
-                && category.matched.FirstOrDefault(x => string.Compare(x.value, value, true) != 0) != null)
+                && category.matched.Any(x => string.Compare(x.value, value, true) != 0))
             {
                 var new_matched = new Matched() { value = value };
 
