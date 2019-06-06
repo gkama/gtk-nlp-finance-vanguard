@@ -11,7 +11,7 @@ variables:
 docker build:
   stage: docker build
   script:
-    - docker build -t .
+    - docker build -t gkama/gtk-nlp-finance-vanguard:latest .
 
 registry push:
   stage: registry push
