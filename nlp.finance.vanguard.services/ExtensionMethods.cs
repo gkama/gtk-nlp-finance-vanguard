@@ -22,7 +22,7 @@ namespace nlp.finance.vanguard.services
         /// If a <see cref="ICategory"/> doesn't exist, then it simply adds it to the list. The majority of the work is done if a <see cref="ICategory"/>
         /// already exists and it needs to be updated accordingly
         /// </summary>
-        public static void AddCategory(this List<ICategory> categories, string model_name, string value)
+        public static void AddCategory(this ICollection<ICategory> categories, string model_name, string value)
         {
             var category = categories
                 .FirstOrDefault(x => x.name == model_name);

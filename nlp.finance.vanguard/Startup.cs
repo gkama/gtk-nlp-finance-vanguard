@@ -32,8 +32,8 @@ namespace nlp.finance.vanguard
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<INlpRepository<VanguardModel>, NlpRepository<VanguardModel>>();
             services.AddSingleton<IModel<VanguardModel>>(Models.vanguard_model);
+            services.AddScoped<INlpRepository<VanguardModel>, NlpRepository<VanguardModel>>();
             services.AddScoped<VanguardModelType>();
             services.AddScoped<CategoryType>();
             services.AddScoped<MatchedType>();

@@ -13,6 +13,7 @@ namespace nlp.finance.vanguard.services
         where T : class
     {
         public IModel<T> model { get; }
+        public ICollection<ICategory> categories { get; set; } = new List<ICategory>();
         public ILogger log { get; }
 
         public NlpRepository(IModel<T> model, ILogger<NlpRepository<T>> log)
@@ -24,7 +25,6 @@ namespace nlp.finance.vanguard.services
         public IEnumerable<ICategory> Categorize(string content)
         {
             var models = new Stack<T>(model.children);
-            var categories = new List<ICategory>();
 
             var sw = new Stopwatch();
 
@@ -36,7 +36,7 @@ namespace nlp.finance.vanguard.services
                 //TODO: add words vs. phrases (containing spaces)
                 content.Tokenize().ForEach(x =>
                 {
-                    BinarySearchDetails(x, m, ref categories);
+                    BinarySearchDetails(x, m);
                 });
 
                 if (m.children.Any())
@@ -49,10 +49,15 @@ namespace nlp.finance.vanguard.services
 
             log.LogInformation($"categorization took {sw.Elapsed.TotalMilliseconds * 1000} μs (microseconds)");
 
+            //Categorization of phrases
+            //need to look through the model's details and see if any of them contain spaces
+            //models = new Stack<T>(model.children);
+
+
             return categories;
         }
 
-        private void BinarySearchDetails(string value, IModel<T> model, ref List<ICategory> categories)
+        private void BinarySearchDetails(string value, IModel<T> model)
         {
             var low = 0;
             var mid = 0;
