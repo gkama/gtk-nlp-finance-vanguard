@@ -1,27 +1,31 @@
-image: mcr.microsoft.com/dotnet/core/sdk:2.2-stretch
+image: docker:stable
 
 stages:
-  - build
-  - test
-  - registry build and push
+  - docker build
+  - registry push
+  - docker push
   
 variables:
-  BUILD_CONFIG: "Release"
   REGISTRY_IMAGE: $CI_REGISTRY_IMAGE:latest
   
-build:
-  stage: build
+docker build:
+  stage: docker build
   script:
-    - "dotnet build . --configuration $BUILD_CONFIG"
+    - docker build -t .
 
-test:
-  stage: test
-  script:
-    - "dotnet test . --configuration $BUILD_CONFIG"
-
-registry build and push:
-  stage: registry build and push
+registry push:
+  stage: registry push
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $REGISTRY_IMAGE .
-    - docker push $REGISTRY_IMAGE
+    - docker build -t $CI_REGISTRY/gkama/gtk-nlp-finance-vanguard:latest .
+    - docker push $CI_REGISTRY/gkama/gtk-nlp-finance-vanguard:latest
+  only:
+    - master
+
+docker push:
+  stage: docker push
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - docker push .
+  only:
+    - master
