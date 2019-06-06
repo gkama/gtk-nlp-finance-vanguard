@@ -64,6 +64,6 @@ namespace nlp.finance.vanguard.tests
         [JsonIgnore]
         public IEnumerable<string> details_split => details.Split('|');
 
-        public IEnumerable<TestModel> children { get; set; } = new List<TestModel>();
+        public ICollection<TestModel> children { get; set; } = new List<TestModel>();
     }
 }
