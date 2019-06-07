@@ -34,7 +34,7 @@ a Natural Language Processing (nlp) API specifically for financial `Vanguard`(ht
 ]
 ```
 
-additionally, we have the GraphQL (`/graphql` or `/ui/playgroud`) implementation where we can either grab the `vanguard_model` or use the `categorize` function. below are examples of that
+additionally, there is the GraphQL (`/graphql` or `/ui/playgroud`) implementation where you can either grab the `vanguard_model` or use the `categorize` function. below are examples of that
 ```
 {
   categorize(content: "this is a test to find VBISX, VBISX, VEXMX and VEXMX Vanguard index funds") {
